@@ -1,0 +1,80 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        # Auth Service routes
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=0
+
+        # Employee Service routes
+        - id: employee-service
+          uri: lb://employee-service
+          predicates:
+            - Path=/employees/**,/departments/**,/designations/**
+          filters:
+            - StripPrefix=0
+
+        # Attendance Service routes
+        - id: attendance-service
+          uri: lb://attendance-service
+          predicates:
+            - Path=/attendance/**
+          filters:
+            - StripPrefix=0
+
+        # Payroll Service routes
+        - id: payroll-service
+          uri: lb://payroll-service
+          predicates:
+            - Path=/payroll/**
+          filters:
+            - StripPrefix=0
+
+      # Global CORS configuration
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+# Eureka client config
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+  instance:
+    preferIpAddress: true
+
+# Actuator endpoints for health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+
+# Logging for debugging
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    com.payroll.gateway: DEBUG

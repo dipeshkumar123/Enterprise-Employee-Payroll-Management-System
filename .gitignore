@@ -1,0 +1,31 @@
+# Java / Maven
+**/target/
+*.class
+*.jar
+*.war
+
+# JavaScript / Vite
+**/node_modules/
+**/dist/
+**/.vite/
+playwright-report/
+test-results/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# IDE and operating system files
+.idea/
+.vscode/
+*.iml
+Thumbs.db
+.DS_Store
+
+# Logs and temporary files
+*.log
+tmp/
+temp/

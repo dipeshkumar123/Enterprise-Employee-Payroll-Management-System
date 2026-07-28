@@ -1,0 +1,36 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: payroll-service
+  datasource:
+    url: jdbc:mysql://localhost:3307/payroll_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: rootpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# Service URLs for inter-service communication via Eureka
+# When Eureka is enabled, these use service discovery (lb://service-name)
+# Fallback to direct URLs when Eureka is unavailable
+employee:
+  service:
+    url: ${EMPLOYEE_SERVICE_URL:http://localhost:8082/employees}
+
+attendance:
+  service:
+    url: ${ATTENDANCE_SERVICE_URL:http://localhost:8083/attendance}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+  instance:
+    preferIpAddress: true

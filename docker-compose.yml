@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: erp-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  service-registry:
+    build:
+      context: ./service-registry
+      dockerfile: Dockerfile
+    container_name: erp-registry
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    container_name: erp-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      service-registry:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+    restart: unless-stopped
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: erp-auth
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/auth_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+      EMPLOYEE_SERVICE_URL: http://employee-service:8082
+      APP_BOOTSTRAP_ADMIN_USERNAME: admin
+      APP_BOOTSTRAP_ADMIN_EMAIL: admin@example.com
+      APP_BOOTSTRAP_ADMIN_PASSWORD: Admin@123
+      APP_BOOTSTRAP_ADMIN_RESET_PASSWORD: "true"
+    restart: unless-stopped
+
+  employee-service:
+    build:
+      context: ./employee-service
+      dockerfile: Dockerfile
+    container_name: erp-employee
+    ports:
+      - "8082:8082"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    restart: unless-stopped
+
+  attendance-service:
+    build:
+      context: ./attendance-service
+      dockerfile: Dockerfile
+    container_name: erp-attendance
+    ports:
+      - "8083:8083"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/attendance_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    restart: unless-stopped
+
+  payroll-service:
+    build:
+      context: ./payroll-service
+      dockerfile: Dockerfile
+    container_name: erp-payroll
+    ports:
+      - "8084:8084"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/payroll_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      EMPLOYEE_SERVICE_URL: http://employee-service:8082/employees
+      ATTENDANCE_SERVICE_URL: http://attendance-service:8083/attendance
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
