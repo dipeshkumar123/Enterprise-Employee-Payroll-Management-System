@@ -1,44 +1,44 @@
 # Enterprise Employee & Payroll Management System
 
-A scalable microservices-based employee and payroll management system built with Spring Boot, Spring Cloud, Spring Security, MySQL, Docker, and GitHub Actions CI/CD.
+A scalable microservices-based employee and payroll management system built with Spring Boot, Spring Cloud, Spring Security, MySQL, and Docker.
 
 ## Architecture
 
 ```
-                  ┌─────────────┐
-                  │   Client    │
-                  └──────┬──────┘
-                         │
-                  ┌──────▼──────────────┐
-                  │   API Gateway       │
-                  │   Port: 8080        │
-                  └──────┬──────────────┘
-                         │
-            ┌────────────┼────────────┐
-            │            │            │
-     ┌──────▼──────┐ ┌──▼─────┐ ┌────▼──────┐
-     │ Auth Service│ │Employee│ │Attendance│
-     │  Port: 8081 │ │Service │ │ Service  │
-     └─────────────┘ │Port:   │ │ Port:    │
-                     │ 8082   │ │ 8083     │
-                     └─────────┘ └──────────┘
-                            │
-                     ┌──────▼──────┐
-                     │ Payroll     │
-                     │ Service     │
-                     │ Port: 8084  │
-                     └─────────────┘
+                  Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
+                  Ã¢â€â€š   Client    Ã¢â€â€š
+                  Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
+                         Ã¢â€â€š
+                  Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€“Â¼Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
+                  Ã¢â€â€š   API Gateway       Ã¢â€â€š
+                  Ã¢â€â€š   Port: 8080        Ã¢â€â€š
+                  Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
+                         Ã¢â€â€š
+            Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â¼Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
+            Ã¢â€â€š            Ã¢â€â€š            Ã¢â€â€š
+     Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€“Â¼Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€“Â¼Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€“Â¼Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
+     Ã¢â€â€š Auth ServiceÃ¢â€â€š Ã¢â€â€šEmployeeÃ¢â€â€š Ã¢â€â€šAttendanceÃ¢â€â€š
+     Ã¢â€â€š  Port: 8081 Ã¢â€â€š Ã¢â€â€šService Ã¢â€â€š Ã¢â€â€š Service  Ã¢â€â€š
+     Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ Ã¢â€â€šPort:   Ã¢â€â€š Ã¢â€â€š Port:    Ã¢â€â€š
+                     Ã¢â€â€š 8082   Ã¢â€â€š Ã¢â€â€š 8083     Ã¢â€â€š
+                     Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
+                            Ã¢â€â€š
+                     Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€“Â¼Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
+                     Ã¢â€â€š Payroll     Ã¢â€â€š
+                     Ã¢â€â€š Service     Ã¢â€â€š
+                     Ã¢â€â€š Port: 8084  Ã¢â€â€š
+                     Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
 
-                  ┌─────────────┐
-                  │    Eureka   │
-                  │   Registry  │
-                  │  Port: 8761 │
-                  └─────────────┘
-                         │
-                  ┌──────▼──────┐
-                  │    MySQL    │
-                  │  Port: 3307 │
-                  └─────────────┘
+                  Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
+                  Ã¢â€â€š    Eureka   Ã¢â€â€š
+                  Ã¢â€â€š   Registry  Ã¢â€â€š
+                  Ã¢â€â€š  Port: 8761 Ã¢â€â€š
+                  Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
+                         Ã¢â€â€š
+                  Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€“Â¼Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
+                  Ã¢â€â€š    MySQL    Ã¢â€â€š
+                  Ã¢â€â€š  Port: 3307 Ã¢â€â€š
+                  Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
 ```
 
 ## Tech Stack
@@ -49,7 +49,6 @@ A scalable microservices-based employee and payroll management system built with
 - **Database**: MySQL 8.0 with separate schemas per service
 - **Build**: Maven
 - **Containerization**: Docker, Docker Compose
-- **CI/CD**: GitHub Actions
 - **Testing**: JUnit 5, Mockito, Spring Test
 
 ## Database Schema
@@ -287,20 +286,6 @@ curl -X GET http://localhost:8080/payroll/payslip/1?year=2024&month=1 \
    - Use sample request #6
    - Review detailed salary breakdown
 
-## CI/CD Pipeline
-
-The project includes GitHub Actions workflow (`.github/workflows/ci-cd.yml`) that:
-
-1. **Build & Test** - Runs tests for all services on every push/PR
-2. **Package** - Creates JAR artifacts
-3. **Docker Build** - Builds Docker images for all services
-4. **Push** - Pushes images to Docker Hub (requires secrets)
-5. **Deploy** - Runs `docker compose up -d --build`
-
-### Required Secrets
-- `DOCKERHUB_USERNAME` - Docker Hub username
-- `DOCKERHUB_TOKEN` - Docker Hub access token
-
 ## Testing
 
 Run tests for individual services:
@@ -315,24 +300,23 @@ cd payroll-service && ./mvnw test
 
 ```
 .
-├── auth-service/             # Authentication & authorization
-│   ├── src/main/java/com/payroll/auth/
-│   │   ├── config/           # Security configuration
-│   │   ├── controller/       # REST controllers
-│   │   ├── dto/              # Data transfer objects
-│   │   ├── entity/           # JPA entities
-│   │   ├── repository/       # Spring Data repositories
-│   │   ├── security/         # JWT filter, utilities
-│   │   └── service/          # Business logic
-│   └── src/test/             # Unit & integration tests
-├── employee-service/         # Employee management
-├── attendance-service/       # Attendance tracking
-├── payroll-service/          # Payroll calculation
-├── gateway-service/          # API Gateway
-├── service-registry/         # Eureka server
-├── docker-compose.yml        # Orchestration
-├── init-db.sql               # Database initialization
-└── .github/workflows/ci-cd.yml # CI/CD pipeline
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ auth-service/             # Authentication & authorization
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ src/main/java/com/payroll/auth/
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ config/           # Security configuration
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ controller/       # REST controllers
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ dto/              # Data transfer objects
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ entity/           # JPA entities
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ repository/       # Spring Data repositories
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ security/         # JWT filter, utilities
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ service/          # Business logic
+Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ src/test/             # Unit & integration tests
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ employee-service/         # Employee management
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ attendance-service/       # Attendance tracking
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ payroll-service/          # Payroll calculation
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ gateway-service/          # API Gateway
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ service-registry/         # Eureka server
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ docker-compose.yml        # Orchestration
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ init-db.sql               # Database initialization
 ```
 
 ## Key Features
@@ -346,122 +330,28 @@ cd payroll-service && ./mvnw test
 - **Validation & Exception Handling**: Global exception handlers, request validation
 - **Testing**: Unit tests, integration tests, controller tests
 - **Dockerization**: All services containerized
-- **CI/CD**: Automated build, test, and deployment pipeline
 
-## Deployment Guide
+## Local Development
 
-### Frontend Deployment (Vercel / Netlify)
+Run the backend services and MySQL locally with Docker Compose:
 
-#### Option A: Vercel (Recommended — Free & Easy)
+```bash
+docker compose up -d --build
+```
 
-1. Push your code to a GitHub repository
-2. Go to [vercel.com](https://vercel.com) and import the `frontend/` directory
-3. Set environment variable:
-   - `VITE_API_URL` = `https://your-backend.onrender.com/api` (or your backend URL)
-4. Deploy — Vercel auto-detects Vite and uses `vercel.json`
-
-#### Option B: Netlify
-
-1. Push code to GitHub
-2. Go to [netlify.com](https://netlify.com) and import the `frontend/` directory
-3. Build settings auto-detected from `netlify.toml`:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-4. Set environment variable `VITE_API_URL` in Netlify dashboard
-5. Deploy
-
-#### Manual Build
+Start the frontend locally in a separate terminal:
 
 ```bash
 cd frontend
 npm install
-npm run build    # Outputs to frontend/dist/
-# Deploy the dist/ folder to any static host
+npm run dev
 ```
 
-### Backend Deployment
+Local URLs:
 
-#### Option A: Docker Compose (Local / VPS)
-
-```bash
-# On any machine with Docker installed
-docker-compose up --build -d
-```
-
-Services will be available at:
 - Frontend: `http://localhost:3000`
 - API Gateway: `http://localhost:8080`
 - Eureka: `http://localhost:8761`
-
-#### Option B: Cloud VM (AWS EC2 / DigitalOcean / Linode)
-
-1. Provision a VM (Ubuntu 22.04, min 4GB RAM)
-2. Install Docker & Docker Compose
-3. Clone repo and run:
-
-```bash
-git clone <your-repo-url>
-cd payroll-management-system
-docker-compose up --build -d
-```
-
-4. Set up Nginx reverse proxy (see `nginx.conf`)
-
-#### Option C: Render / Railway (Simplified Cloud Deployment)
-
-Each service can be deployed as a separate web service:
-
-| Service | Build Command | Start Command | Port |
-|---------|---------------|---------------|------|
-| service-registry | `./mvnw clean package -DskipTests` | `java -jar target/service-registry-0.0.1-SNAPSHOT.jar` | 8761 |
-| auth-service | `./mvnw clean package -DskipTests` | `java -jar target/auth-service-0.0.1-SNAPSHOT.jar` | 8081 |
-| employee-service | `./mvnw clean package -DskipTests` | `java -jar target/employee-service-0.0.1-SNAPSHOT.jar` | 8082 |
-| attendance-service | `./mvnw clean package -DskipTests` | `java -jar target/attendance-service-0.0.1-SNAPSHOT.jar` | 8083 |
-| payroll-service | `./mvnw clean package -DskipTests` | `java -jar target/payroll-service-0.0.1-SNAPSHOT.jar` | 8084 |
-| gateway-service | `./mvnw clean package -DskipTests` | `java -jar target/gateway-service-0.0.1-SNAPSHOT.jar` | 8080 |
-
-**Important:** Use [Aiven](https://aiven.io) or [Railway MySQL](https://railway.app) for managed MySQL.
-
-### Database
-
-**Local:** MySQL runs in Docker via `docker-compose.yml` (port 3307)
-
-**Production:** Use a managed MySQL service:
-- [Aiven MySQL](https://aiven.io/mysql) — Free tier available
-- [Railway MySQL](https://railway.app) — Simple setup
-- [AWS RDS](https://aws.amazon.com/rds/) — Enterprise option
-
-### Nginx Reverse Proxy (Production)
-
-For production, use the provided `nginx.conf`:
-
-```bash
-sudo apt install nginx certbot python3-certbot-nginx
-sudo cp nginx.conf /etc/nginx/sites-available/payroll-system
-sudo ln -s /etc/nginx/sites-available/payroll-system /etc/nginx/sites-enabled/
-sudo certbot --nginx -d your-domain.com
-sudo nginx -t && sudo systemctl reload nginx
-```
-
-### CI/CD Pipeline
-
-The `.github/workflows/ci-cd.yml` automatically:
-
-1. **Builds & Tests** — Runs Maven tests on every push/PR
-2. **Packages** — Creates JAR artifacts
-3. **Builds Docker images** — For all 6 services
-4. **Pushes to Docker Hub** — (requires `DOCKERHUB_USERNAME` & `DOCKERHUB_TOKEN` secrets)
-5. **Deploys** — Runs `docker-compose up -d --build` on the server via SSH
-
-### Quick Deploy Checklist
-
-- [ ] Frontend: Deployed to Vercel/Netlify with `VITE_API_URL` set
-- [ ] Backend: Docker Compose running on a server
-- [ ] MySQL: Managed database created with schemas initialized
-- [ ] Nginx: Configured as reverse proxy with SSL
-- [ ] CI/CD: GitHub Actions secrets configured
-- [ ] Domain: DNS pointed to server IP
-
 ## Future Enhancements
 
 - Add Swagger/OpenAPI documentation for each service
